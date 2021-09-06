@@ -1,6 +1,7 @@
 ﻿using System;
 using SWLOR.Game.Server.Core;
 using SWLOR.Game.Server.Core.NWNX;
+using SWLOR.Game.Server.Entity;
 using SWLOR.Game.Server.Service;
 using static SWLOR.Game.Server.Core.NWScript.NWScript;
 
@@ -40,12 +41,16 @@ namespace SWLOR.Game.Server.Feature
         }
 
         /// <summary>
-        /// When the server starts up, a log message will be written.
+        /// When the server starts up, a log message will be written and config will be updated.
         /// </summary>
         [NWNEventHandler("mod_load")]
         public static void ProcessBootUp()
         {
             Log.Write(LogGroup.Server, "Server is starting up.");
+
+            var serverConfig = DB.Get<ServerConfiguration>("SWLOR") ?? new ServerConfiguration();
+            serverConfig.DateLastRestart = DateTime.UtcNow;
+            DB.Set("SWLOR", serverConfig);
         }
     }
 }

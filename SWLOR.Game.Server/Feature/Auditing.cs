@@ -1,6 +1,7 @@
 ﻿using SWLOR.Game.Server.Core;
 using SWLOR.Game.Server.Core.NWNX;
 using SWLOR.Game.Server.Core.NWNX.Enum;
+using SWLOR.Game.Server.Entity;
 using SWLOR.Game.Server.Service;
 using static SWLOR.Game.Server.Core.NWScript.NWScript;
 
@@ -22,6 +23,20 @@ namespace SWLOR.Game.Server.Feature
 
             var log = $"{pcName} - {account} - {cdKey} - {ipAddress}: Connected to server";
             Log.Write(LogGroup.Connection, log, true);
+
+            // Update the player's last known CD Key.
+            // If this player hasn't been initialized yet (first time logging in),
+            // the CD Key will be captured during player initialization.
+            if (GetIsPC(player) && !GetIsDM(player))
+            {
+                var playerId = GetObjectUUID(player);
+                var dbPlayer = DB.Get<Player>(playerId);
+                if (dbPlayer == null)
+                    return;
+
+                dbPlayer.LastCDKey = cdKey;
+                DB.Set(playerId, dbPlayer);
+            }
         }
 
         /// <summary>

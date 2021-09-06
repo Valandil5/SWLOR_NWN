@@ -46,6 +46,7 @@ namespace SWLOR.Game.Server.Feature
             GiveStartingItems(player);
             AssignCharacterType(player, dbPlayer);
             RegisterDefaultRespawnPoint(dbPlayer);
+            dbPlayer.LastCDKey = GetPCPublicCDKey(player, true);
 
             DB.Set(playerId, dbPlayer);
         }

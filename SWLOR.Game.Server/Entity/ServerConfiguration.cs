@@ -7,11 +7,13 @@ namespace SWLOR.Game.Server.Entity
         public ServerConfiguration()
         {
             MigrationVersion = 0;
-            LastRestart = DateTime.MinValue;
+            DateLastRestart = DateTime.MinValue;
+            DateLastCityMaintenance = DateTime.MinValue;
         }
 
         public int MigrationVersion { get; set; }
-        public DateTime LastRestart { get; set; }
+        public DateTime DateLastRestart { get; set; }
+        public DateTime DateLastCityMaintenance { get; set; }
         public override string KeyPrefix => "ServerConfiguration";
     }
 }

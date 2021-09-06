@@ -19,7 +19,8 @@ namespace SWLOR.Game.Server.Service
         PlayerHousing,
         PlayerMarket,
         AI,
-        Space
+        Space,
+        City
     }
 
     public static class Log
